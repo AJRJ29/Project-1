@@ -10,7 +10,6 @@ var brickHeight = 20;
 var brickPadding = 15;
 var score = 0
 
-
 var bricks = [
   [ { x: 60, y: 50, status: 1 }, { x: 135, y: 50, status: 1 }, { x: 210, y: 50, status: 1 },{ x: 285, y: 50, status: 1 }, { x: 360, y: 50, status: 1 } ],
   [ { x: 60, y: 95, status: 1 }, { x: 135, y: 95, status: 1 }, { x: 210, y: 95, status: 1 },{ x: 285, y: 95, status: 1 }, { x: 360, y: 95, status: 1 } ],
@@ -33,6 +32,23 @@ var ball = {
   speedX: 2,
   speedY: 2
 }
+
+function drawPaddle() {
+  ctx.beginPath()
+  ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height)
+  ctx.fillStyle = "lightblue"
+  ctx.fill()
+  ctx.closePath()
+}
+
+function drawBall() {
+  ctx.beginPath()
+  ctx.arc(ball.x, ball.y, ball.radius, ball.width, ball.height, ball.arc, ball.speedX, ball.speedY)
+  ctx.fillStyle = "white"
+  ctx.fill()
+  ctx.closePath()
+}
+
 
 function drawBricks() { 
   if(bricks[0][0].status == 1) {
@@ -105,22 +121,6 @@ function drawBricks() {
     ctx.fill();
     ctx.closePath();
   }
-}
-
-function drawPaddle() {
-  ctx.beginPath()
-  ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height)
-  ctx.fillStyle = "lightblue"
-  ctx.fill()
-  ctx.closePath()
-}
-
-function drawBall() {
-  ctx.beginPath()
-  ctx.arc(ball.x, ball.y, ball.radius, ball.width, ball.height, ball.arc, ball.speedX, ball.speedY)
-  ctx.fillStyle = "white"
-  ctx.fill()
-  ctx.closePath()
 }
 
 function brickBallCollision() {
@@ -233,7 +233,7 @@ function drawFunction() {
   drawBricks()
   brickBallCollision()
   
-  if(ball.x + ball.radius == canvas.width || ball.x == ball.radius) {
+  if(ball.x +ball.radius == canvas.width || ball.x == ball.radius) {
     ball.speedX = -ball.speedX
   }
   else if(ball.y + ball.radius == canvas.height) {

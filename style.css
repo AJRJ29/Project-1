@@ -4,6 +4,18 @@
     margin: 0; 
 }
 
+/* div {
+    margin-top: 40px;
+} */
+
+h1 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 100px;
+    text-align: center;
+    color: red;
+}
+
 body {
     background: url("https://www.fg-a.com/wallpapers/2020-black-crystalline-peaks-image.jpg");
     background-attachment: fixed; 
@@ -12,7 +24,6 @@ body {
 }
 
 canvas { 
-
     background: url("https://www.fg-a.com/wallpapers/2020-black-crystalline-peaks-image.jpg");
     background-attachment: fixed; 
     background-size: cover;
