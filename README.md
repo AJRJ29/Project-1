@@ -1,7 +1,7 @@
 # BreakOut
 This game is a top-down 2d breakout game. The game will start right when the game loads. If the ball collide with the bricks the bricks will disappear. The game will end if you break all the bricks or if you fail to bounce off the ball on the paddle. 
 
-[BreakOut] (file:///Users/josh/unit1/Projet1/index.html)
+[BreakOut](file:///Users/josh/unit1/Projet1/index.html)
 
 # Wireframes
   ![](0.jpeg)
