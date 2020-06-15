@@ -4,10 +4,20 @@
     margin: 0; 
 }
 
+body {
+    background: url("https://www.fg-a.com/wallpapers/2020-black-crystalline-peaks-image.jpg");
+    background-attachment: fixed; 
+    background-size: cover;
+    background-position: center;
+}
 
 canvas { 
 
-    background: lightgray; 
+    background: url("https://www.fg-a.com/wallpapers/2020-black-crystalline-peaks-image.jpg");
+    background-attachment: fixed; 
+    background-size: cover;
+    background-position: center;
     display: block; 
     margin: 0 auto; 
+    border: 2px solid gray
 }

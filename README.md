@@ -1,33 +1,33 @@
 # BreakOut
-This game is a top-down 2d breakout game. The game will start right when the game loads. If the ball collide with the     bricks the bricks will dissapear. The game will end if you break all the bricks or if you lose all you lives. 
+This game is a top-down 2d breakout game. The game will start right when the game loads. If the ball collide with the bricks the bricks will disappear. The game will end if you break all the bricks or if you fail to bounce off the ball on the paddle. 
+
+[BreakOut] (file:///Users/josh/unit1/Projet1/index.html)
 
 # Wireframes
-  ![Alt Text](0.jpeg)
+  ![](0.jpeg)
    
 
 # Tech Being Used
-  Javascript
-  HTML
-  CSS
+  - Javascript
+  - HTML
+  - CSS
 
 # MVP Checklist
-  - Create a canvas to draw on it 
-  - Move the paddle
-  - Move the ball
-  - Control paddle with keyboard controls
-  - Build the bricks 
-  - Collision detection
-  - Gameover
-  - Style Game
+  - [X] Create a canvas to draw on it 
+  - [X] Move the paddle
+  - [X] Move the ball
+  - [X] Control paddle with keyboard controls
+  - [X] Build the bricks 
+  - [X] Collision detection
+  - [X] Gameover
+  - [X] Win
+  - [X] Style Game
 
 # Stretch Goals
-  - Use mouse to control
-  - Track score
-  - Style game even more
-  - Add music 
-
-# Issues And Bugs
-
+  - [] Use mouse to control
+  - [] Track score
+  - [] Style game even more
+  - [] Add music 
 
 
 
