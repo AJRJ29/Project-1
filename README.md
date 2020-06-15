@@ -2,7 +2,8 @@
 This game is a top-down 2d breakout game. The game will start right when the game loads. If the ball collide with the     bricks the bricks will dissapear. The game will end if you break all the bricks or if you lose all you lives. 
 
 # Wireframes
-  
+  ![Alt Text](/images/0.png)
+   
 
 # Tech Being Used
   Javascript
