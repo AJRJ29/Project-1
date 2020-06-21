@@ -17,7 +17,6 @@ var bricks = [
   [ { x: 60, y: 140, status: 1 }, { x: 135, y: 140, status: 1 }, { x: 210, y: 140, status: 1 },{ x: 285, y: 140, status: 1 }, { x: 360, y: 140, status: 1 } ],
 ];
 
-
 var paddle = {
   x: 202,
   y: 310,
@@ -32,8 +31,8 @@ var ball = {
   width: 10,
   height: 0,
   arc: Math.PI * 2,
-  speedX: 2,
-  speedY: -2
+  speedX: 4,
+  speedY: -4
 }
 //ball will have a random number of an x range lenght
 //the width of the canvas 450 
@@ -49,7 +48,7 @@ function randomizeBall() {
 function drawPaddle() {
   ctx.beginPath()
   ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height)
-  ctx.fillStyle = "lightblue"
+  ctx.fillStyle = "red"
   ctx.fill()
   ctx.closePath()
 }
@@ -80,7 +79,7 @@ function brickBallCollision() {
   for(var c = 0; c < brickColumn; c++) {
     for(var r = 0; r < brickRow; r++) {
       if(bricks[r][c].status == 1) {   
-        if(ball.x + ball.radius >= bricks[r][c].x && ball.x - ball.radius <= bricks[r][c].x + brickWidth && ball.y + ball.radius >= bricks[r][c].y && ball.y - ball.radius <= bricks[r][c].y + brickHeight) { 
+        if(ball.x + ball.radius >= bricks[r][c].x && ball.x - ball.radius <= bricks[r][c].x + brickWidth && ball.y + ball.radius >= bricks[r][c].y && ball.y-ball.radius <= bricks[r][c].y + brickHeight) { 
           ball.speedY = -ball.speedY
           bricks[r][c].status = 0
           score = score + 1
@@ -108,7 +107,6 @@ function drawFunction() {
   } 
   if(ball.y + ball.radius >= canvas.height) {
     alert("Loser")
-    clearInterval(interval)
     }
   if(ball.y < 0) {
     ball.speedY = -ball.speedY;
@@ -116,6 +114,7 @@ function drawFunction() {
 
   ball.x = ball.x + ball.speedX;
   ball.y = ball.y + ball.speedY;
+  requestAnimationFrame(drawFunction)
 }
 
 function movementHandler(e) {
@@ -132,13 +131,22 @@ function movementHandler(e) {
 
 document.addEventListener("keydown", movementHandler);
 startButton.addEventListener("click", startGame);
+document.addEventListener("mousemove", mouseHandler)
+
 
 function startGame() {
+  drawFunction();
   randomizeBall();
   //will start game
   //things that starts when the game load
     //Ball (is visible on page load but not moving)
     //paddle (canot move when page load)
 
-  interval = setInterval(drawFunction, 10)
+}
+
+function mouseHandler(e) {
+  var mouseControl = e.clientX - canvas.offsetLeft;
+  if(mouseControl > 0 && mouseControl < canvas.width) {
+    paddle.x = mouseControl - paddle.width/2;
+  }
 }
