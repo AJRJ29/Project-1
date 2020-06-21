@@ -16,6 +16,19 @@ h1 {
     color: red;
 }
 
+.start-btn {
+    height: 60px;
+    width: 70px;
+    margin-left: 50%;
+    margin-top: 50px;
+}
+
+button {
+    color: white;
+    text-align: center;
+    margin: 0 auto;
+}
+
 body {
     background: url("https://www.fg-a.com/wallpapers/2020-black-crystalline-peaks-image.jpg");
     background-attachment: fixed; 

@@ -1,9 +1,10 @@
 var canvas = document.getElementById("canvas")
 var ctx = canvas.getContext("2d")
 
+var startButton = document.querySelector(".start");
 var brickOffsetTop = 30;
 var brickOffsetLeft = 60;
-var brickRow = 2;
+var brickRow = 3;
 var brickColumn = 5;
 var brickWidth = 60;
 var brickHeight = 20;
@@ -11,7 +12,7 @@ var brickPadding = 15;
 var score = 0
 
 var bricks = [
-  [ { x: 60, y: 50, status: 1 }, { x: 135, y: 50, status: 1 }, { x: 210, y: 50, status: 1 },{ x: 285, y: 50, status: 1 }, { x: 360, y: 50, status: 1 } ],
+  [ { x: 60, y: 50, status: 1, }, { x: 135, y: 50, status: 1 }, { x: 210, y: 50, status: 1 },{ x: 285, y: 50, status: 1 }, { x: 360, y: 50, status: 1 } ],
   [ { x: 60, y: 95, status: 1 }, { x: 135, y: 95, status: 1 }, { x: 210, y: 95, status: 1 },{ x: 285, y: 95, status: 1 }, { x: 360, y: 95, status: 1 } ],
 ];
 
@@ -30,7 +31,17 @@ var ball = {
   height: 0,
   arc: Math.PI * 2,
   speedX: 2,
-  speedY: 2
+  speedY: -2
+}
+//ball will have a random number of an x range lenght
+//the width of the canvas 450 
+//range of the 2 y value 
+//height of the canvas 290-200 
+
+function randomizeBall() {
+  //randomize x and y value
+  ball.y = Math.round(Math.random() * 90) + 200;
+  ball.x = Math.round(Math.random() * 440) + 20;
 }
 
 function drawPaddle() {
@@ -49,182 +60,141 @@ function drawBall() {
   ctx.closePath()
 }
 
-
-function drawBricks() { 
-  if(bricks[0][0].status == 1) {
-    ctx.beginPath();
-    ctx.rect(bricks[0][0].x, bricks[0][0].y, brickWidth, brickHeight);
-    ctx.fillStyle = "blue";
-    ctx.fill();
-    ctx.closePath();
-  } 
-  if(bricks[0][1].status == 1) {
-    ctx.beginPath();
-    ctx.rect(bricks[0][1].x, bricks[0][1].y, brickWidth, brickHeight);
-    ctx.fillStyle = "green";
-    ctx.fill();
-    ctx.closePath();
-  }
-  if(bricks[0][2].status == 1) { 
-    ctx.beginPath();
-    ctx.rect(bricks[0][2].x, bricks[0][2].y, brickWidth, brickHeight);
-    ctx.fillStyle = "yellow";
-    ctx.fill();
-    ctx.closePath();
-  } 
-  if(bricks[0][3].status == 1) {  
-    ctx.beginPath();
-    ctx.rect(bricks[0][3].x, bricks[0][3].y, brickWidth, brickHeight);
-    ctx.fillStyle = "orange";
-    ctx.fill();
-    ctx.closePath();
-  } 
-  if(bricks[0][4].status == 1) { 
-    ctx.beginPath();
-    ctx.rect(bricks[0][4].x, bricks[0][4].y, brickWidth, brickHeight);
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.closePath();
-  } 
-  if(bricks[1][0].status == 1) {  
-    ctx.beginPath();
-    ctx.rect(bricks[1][0].x, bricks[1][0].y, brickWidth, brickHeight);
-    ctx.fillStyle = "blue";
-    ctx.fill();
-    ctx.closePath();
-  }  
-  if(bricks[1][1].status == 1) { 
-    ctx.beginPath();
-    ctx.rect(bricks[1][1].x, bricks[1][1].y, brickWidth, brickHeight);
-    ctx.fillStyle = "green";
-    ctx.fill();
-    ctx.closePath();
-  }    
-  if(bricks[1][2].status == 1) {
-    ctx.beginPath();
-    ctx.rect(bricks[1][2].x, bricks[1][2].y, brickWidth, brickHeight);
-    ctx.fillStyle = "yellow";
-    ctx.fill();
-    ctx.closePath();
-  }  
-  if(bricks[1][3].status == 1) {
-    ctx.beginPath();
-    ctx.rect(bricks[1][3].x, bricks[1][3].y, brickWidth, brickHeight);
-    ctx.fillStyle = "orange";
-    ctx.fill();
-    ctx.closePath();
-  }
-  if(bricks[1][4].status == 1) {
-    ctx.beginPath();
-    ctx.rect(bricks[1][4].x, bricks[1][4].y, brickWidth, brickHeight);
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.closePath();
+function drawBricks() {
+  for(var c = 0; c < brickColumn; c++) {
+    for(var r = 0; r < brickRow; r++) {
+      if(bricks[r][c].status == 1) {
+        ctx.beginPath();
+        ctx.rect(bricks[r][c].x, bricks[r][c].y, brickWidth, brickHeight);
+        ctx.fillStyle = "blue";
+        ctx.fill();
+        ctx.closePath();
+      }
+        
+    }
   }
 }
 
 function brickBallCollision() {
-  if(bricks[0][0].status == 1) {   
-    if(ball.x + ball.radius > bricks[0][0].x && ball.x + ball.radius < bricks[0][0].x + brickWidth && ball.y + ball.radius > bricks[0][0].y && ball.y + ball.radius < bricks[0][0].y + brickHeight) { 
+  for(var c = 0; c < brickColumn; c++) {
+    for(var r = 0; r < brickRow; r++) {
+      if(bricks[r][c].status == 1) {   
+        if(ball.x + ball.radius >= bricks[r][c].x && ball.x - ball.radius <= bricks[r][c].x + brickWidth && ball.y + ball.radius >= bricks[r][c].y && ball.y - ball.radius <= bricks[r][c].y + brickHeight) { 
           ball.speedY = -ball.speedY
-          bricks[0][0].status = 0
+          bricks[r][c].status = 0
           score = score + 1
           if(score == 10) {
             alert ("Congrats 😎")
           }
+        }  
+      }
     }
-  }
-  if(bricks[0][1].status == 1) {  
-    if(ball.x + ball.radius > bricks[0][1].x && ball.x + ball.radius < bricks[0][1].x + brickWidth && ball.y + ball.radius > bricks[0][1].y && ball.y + ball.radius < bricks[0][1].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[0][1].status = 0
-          score = score + 1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[0][2].status == 1) {  
-    if(ball.x + ball.radius > bricks[0][2].x && ball.x + ball.radius < bricks[0][2].x + brickWidth && ball.y + ball.radius > bricks[0][2].y && ball.y + ball.radius < bricks[0][2].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[0][2].status = 0
-          score = score + 1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[0][3].status == 1) {  
-    if(ball.x + ball.radius > bricks[0][3].x && ball.x + ball.radius < bricks[0][3].x + brickWidth && ball.y + ball.radius > bricks[0][3].y && ball.y + ball.radius < bricks[0][3].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[0][3].status = 0
-          score = score + 1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[0][4].status == 1) {  
-    if(ball.x + ball.radius > bricks[0][4].x && ball.x + ball.radius < bricks[0][4].x + brickWidth && ball.y + ball.radius > bricks[0][4].y && ball.y + ball.radius < bricks[0][4].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[0][4].status = 0
-          score = score + 1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[1][0].status == 1) {  
-    if(ball.x + ball.radius > bricks[1][0].x && ball.x + ball.radius < bricks[1][0].x + brickWidth && ball.y + ball.radius > bricks[1][0].y && ball.y + ball.radius < bricks[1][0].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[1][0].status = 0
-          score = score + 1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[1][1].status == 1) {  
-    if(ball.x + ball.radius > bricks[1][1].x && ball.x + ball.radius < bricks[1][1].x + brickWidth && ball.y + ball.radius > bricks[1][1].y && ball.y + ball.radius < bricks[1][1].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[1][1].status = 0
-          score = score +1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[1][2].status == 1) {  
-    if(ball.x + ball.radius > bricks[1][2].x && ball.x + ball.radius < bricks[1][2].x + brickWidth && ball.y + ball.radius > bricks[1][2].y && ball.y + ball.radius < bricks[1][2].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[1][2].status = 0
-          score = score +1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[1][3].status == 1) {  
-    if(ball.x + ball.radius > bricks[1][3].x && ball.x + ball.radius < bricks[1][3].x + brickWidth && ball.y + ball.radius > bricks[1][3].y && ball.y + ball.radius < bricks[1][3].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[1][3].status = 0
-          score = score +1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
-  if(bricks[1][4].status == 1) {  
-    if(ball.x + ball.radius > bricks[1][4].x && ball.x + ball.radius < bricks[1][4].x + brickWidth && ball.y + ball.radius > bricks[1][4].y && ball.y + ball.radius < bricks[1][4].y + brickHeight) { 
-          ball.speedY = -ball.speedY
-          bricks[1][4].status = 0
-          score = score +1
-          if(score == 10) {
-            alert ("Congrats 😎")
-          }
-    }
-  }
+  }  
 }
+
+
+// function brickBallCollision() {
+//   if(bricks[0][0].status == 1) {   
+//     if(ball.x + ball.radius > bricks[0][0].x && ball.x + ball.radius < bricks[0][0].x + brickWidth && ball.y + ball.radius > bricks[0][0].y && ball.y + ball.radius < bricks[0][0].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[0][0].status = 0
+//           score = score + 1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[0][1].status == 1) {  
+//     if(ball.x + ball.radius > bricks[0][1].x && ball.x + ball.radius < bricks[0][1].x + brickWidth && ball.y + ball.radius > bricks[0][1].y && ball.y + ball.radius < bricks[0][1].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[0][1].status = 0
+//           score = score + 1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[0][2].status == 1) {  
+//     if(ball.x + ball.radius > bricks[0][2].x && ball.x + ball.radius < bricks[0][2].x + brickWidth && ball.y + ball.radius > bricks[0][2].y && ball.y + ball.radius < bricks[0][2].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[0][2].status = 0
+//           score = score + 1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[0][3].status == 1) {  
+//     if(ball.x + ball.radius > bricks[0][3].x && ball.x + ball.radius < bricks[0][3].x + brickWidth && ball.y + ball.radius > bricks[0][3].y && ball.y + ball.radius < bricks[0][3].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[0][3].status = 0
+//           score = score + 1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[0][4].status == 1) {  
+//     if(ball.x + ball.radius > bricks[0][4].x && ball.x + ball.radius < bricks[0][4].x + brickWidth && ball.y + ball.radius > bricks[0][4].y && ball.y + ball.radius < bricks[0][4].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[0][4].status = 0
+//           score = score + 1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[1][0].status == 1) {  
+//     if(ball.x + ball.radius > bricks[1][0].x && ball.x + ball.radius < bricks[1][0].x + brickWidth && ball.y + ball.radius > bricks[1][0].y && ball.y + ball.radius < bricks[1][0].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[1][0].status = 0
+//           score = score + 1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[1][1].status == 1) {  
+//     if(ball.x + ball.radius > bricks[1][1].x && ball.x + ball.radius < bricks[1][1].x + brickWidth && ball.y + ball.radius > bricks[1][1].y && ball.y + ball.radius < bricks[1][1].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[1][1].status = 0
+//           score = score +1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[1][2].status == 1) {  
+//     if(ball.x + ball.radius > bricks[1][2].x && ball.x + ball.radius < bricks[1][2].x + brickWidth && ball.y + ball.radius > bricks[1][2].y && ball.y + ball.radius < bricks[1][2].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[1][2].status = 0
+//           score = score +1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[1][3].status == 1) {  
+//     if(ball.x + ball.radius > bricks[1][3].x && ball.x + ball.radius < bricks[1][3].x + brickWidth && ball.y + ball.radius > bricks[1][3].y && ball.y + ball.radius < bricks[1][3].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[1][3].status = 0
+//           score = score +1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+//   if(bricks[1][4].status == 1) {  
+//     if(ball.x + ball.radius > bricks[1][4].x && ball.x + ball.radius < bricks[1][4].x + brickWidth && ball.y + ball.radius > bricks[1][4].y && ball.y + ball.radius < bricks[1][4].y + brickHeight) { 
+//           ball.speedY = -ball.speedY
+//           bricks[1][4].status = 0
+//           score = score +1
+//           if(score == 10) {
+//             alert ("Congrats 😎")
+//           }
+//     }
+//   }
+// }
 
 function drawFunction() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -233,25 +203,25 @@ function drawFunction() {
   drawBricks()
   brickBallCollision()
   
-  if(ball.x +ball.radius == canvas.width || ball.x == ball.radius) {
+  if(ball.x + ball.radius >= canvas.width || ball.x < 0) {
     ball.speedX = -ball.speedX
   }
-  else if(ball.y + ball.radius == canvas.height) {
-    if(ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
-      ball.speedY = -ball.speedY; 
-    } else {
-      alert("Loser 🤣")
+  if(ball.x > paddle.x && ball.x < paddle.x + paddle.width && ball.y + ball.radius >= paddle.y) {
+    ball.speedY = -ball.speedY; 
+  } 
+  if(ball.y + ball.radius >= canvas.height) {
+    // } else {
+      // alert("Loser 🤣")
       clearInterval(interval)
-    }
+    // }
   }
-  if(ball.y == ball.radius) {
+  if(ball.y < 0) {
     ball.speedY = -ball.speedY;
   }
 
   ball.x = ball.x + ball.speedX
   ball.y = ball.y + ball.speedY
 }
-var interval = setInterval(drawFunction, 10)
 
 function movementHandler(e) {
   switch(e.key) {
@@ -265,7 +235,18 @@ function movementHandler(e) {
 
 }
 
-document.addEventListener("keydown", movementHandler)
+document.addEventListener("keydown", movementHandler);
+startButton.addEventListener("click", startGame);
+
+function startGame(e) {
+  randomizeBall();
+  //will start game
+  //things that starts when the game load
+    //Ball (is visible on page load but not moving)
+    //paddle (canot move when page load)
+
+    var interval = setInterval(drawFunction, 10)
+}
 
 
 
